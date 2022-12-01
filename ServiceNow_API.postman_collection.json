@@ -1,0 +1,552 @@
+{
+	"info": {
+		"_postman_id": "ccbf7750-9aff-4b38-9e62-6647da336245",
+		"name": "ServiceNow_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24502447"
+	},
+	"item": [
+		{
+			"name": "ServiceNow_Create_Incident_POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"//Get the sysid from Post - create incident\r",
+							"// Save it to global variable \r",
+							"//Get the complete Json response\r",
+							"Resp = pm.response.json();\r",
+							"//Use the Json path to get the value and save it to Sysidd\r",
+							"Sysidd = Resp.result.sys_id;\r",
+							"//pm.globals.set(\"G_Sysid\",Resp.result.sys_id);\r",
+							"//Save it to the Global variable\r",
+							"pm.globals.set(\"G_Sysid\", Sysidd);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"short_description\":\"window login issue\",\"description\":\"Not able to login to admin system\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNow_Retrieve_Incident_GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident/{{G_Sysid}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{G_Sysid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNow_Modify_INC_PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"short_description\":\"window login and OS issue\",\"description\":\"Not able to login to admin system\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident/{{G_Sysid}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{G_Sysid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNow_Update_INC_PATCH",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"short_description\":\"Windows login and OS issue\",\"description\":\"Not able to login to admin system\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident/{{G_Sysid}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{G_Sysid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNow_RetrieveAll_INC_GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"Resp = pm.response.json();\r",
+							"\r",
+							"Sys_IDs = pm.globals.get(\"G_Sysid\")\r",
+							"\r",
+							"console.log(Sys_IDs);\r",
+							"\r",
+							"pm.test(\"Verified the already created SysID\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(Sys_IDs);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNow_Del_INC_DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident/{{G_Sysid}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{G_Sysid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNow_RetrieveAll_INC_GET Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"Resp = pm.response.json();\r",
+							"\r",
+							"Sys_IDs = pm.globals.get(\"G_Sysid\")\r",
+							"\r",
+							"pm.test(\"Verified the deleted SysID is not present\", function () {\r",
+							"    pm.expect(pm.response.text()).not.include(\"G_Sysid\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "Nqq3SmdS-pqmw2HET9XY41rmXnJ0-NkkwCWf7x8f8hIlOrpEyhx2lpMlERViJs1IlwemWWtNPGR_E3k4lIp3rQ",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://www.getpostman.com/oauth2/callback",
+							"type": "string"
+						},
+						{
+							"key": "state",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "https://dev109106.service-now.com/oauth_auth.do",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://dev109106.service-now.com/oauth_token.do",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "70cdd46704131110916016525a3ef811",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "tester",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Oauth_token",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_env}}/api/now/table/incident",
+					"protocol": "https",
+					"host": [
+						"{{SIT_env}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Weather_GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"cod\");\r",
+							"});\r",
+							"pm.test(\"Verified\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.cod).to.eql(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "a754ee10d05c5c37be3dd55317eb060d",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "appid",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?lat=11.004556&lon=76.961632",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "11.004556"
+						},
+						{
+							"key": "lon",
+							"value": "76.961632"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Country_POST",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <soap:Body>\r\n        <CountryCurrency xmlns=\"http://www.oorsprong.org/websamples.countryinfo\">\r\n            <sCountryISOCode>AUS</sCountryISOCode>\r\n        </CountryCurrency>\r\n    </soap:Body>\r\n</soap:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso",
+					"protocol": "http",
+					"host": [
+						"webservices",
+						"oorsprong",
+						"org"
+					],
+					"path": [
+						"websamples.countryinfo",
+						"CountryInfoService.wso"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL_POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\r\n  countries {\r\n    code\r\n    name\r\n    emoji\r\n  }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://countries.trevorblades.com",
+					"protocol": "https",
+					"host": [
+						"countries",
+						"trevorblades",
+						"com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "Learn@1900",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SIT_env",
+			"value": "dev109106.service-now.com"
+		}
+	]
+}
